@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WorkBuddy 实操分享 · 讲师执行手册</title>
+<script>
+(function(){var t=localStorage.getItem('wb_theme');if(!t){t=window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark';}document.documentElement.setAttribute('data-theme',t);})();
+</script>
+<style>
+:root{
+--bg:#0d1117;--bg-card:#161b22;--text:#e6edf3;--text-dim:#8b949e;--border:#30363d;
+--accent:#2f81f7;--accent-2:#d29922;--accent-3:#a371f7;--accent-4:#f85149;
+--quote-bg:#1c2128;--quote-line:#2f81f7;
+}
+html[data-theme="light"]{
+--bg:#f6f8fa;--bg-card:#ffffff;--text:#1f2328;--text-dim:#59636e;--border:#d8dde3;
+--accent:#0a7b61;--accent-2:#bf6a00;--accent-3:#4f5cc5;--accent-4:#c5307a;
+--quote-bg:#f0f4f8;--quote-line:#0a7b61;
+}
+html[data-theme="light"] .theme-toggle button{color:#4a5361;}
+html[data-theme="light"] .theme-toggle button.on{color:#fff;}
+
+*{box-sizing:border-box;}
+body{margin:0;padding:28px 20px 80px;background:var(--bg);color:var(--text);
+font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+font-size:15px;line-height:1.8;}
+.wrap{max-width:920px;margin:0 auto;}
+.header{position:relative;padding-right:130px;margin-bottom:18px;padding-bottom:14px;
+border-bottom:1px solid var(--border);}
+h1{font-size:25px;font-weight:600;margin:0 0 8px;}
+.sub{color:var(--text-dim);font-size:13.5px;margin:0;}
+.theme-toggle{position:absolute;right:0;top:50%;transform:translateY(-50%);
+display:flex;background:var(--bg-card);border:1px solid var(--border);
+border-radius:18px;padding:3px;}
+.theme-toggle button{border:0;background:transparent;font-size:13.5px;font-weight:700;
+letter-spacing:.5px;padding:6px 16px;border-radius:15px;color:#c9d1d9;
+cursor:pointer;font-family:inherit;}
+.theme-toggle button:hover{color:var(--text);}
+.theme-toggle button.on{background:var(--accent);color:#ffffff;}
+.theme-toggle button.on:hover{color:#ffffff;}
+
+h2{font-size:20px;font-weight:600;margin:38px 0 14px;padding-bottom:8px;
+border-bottom:2px solid var(--accent);}
+h3{font-size:16.5px;font-weight:600;margin:0 0 10px;color:var(--text);}
+h4{font-size:14.5px;font-weight:600;margin:16px 0 6px;color:var(--text);}
+p{margin:0 0 10px;}
+a{color:var(--accent);text-decoration:none;}
+a:hover{text-decoration:underline;}
+ul,ol{margin:0 0 12px;padding-left:22px;}
+li{margin-bottom:6px;}
+
+.toc{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;
+padding:14px 18px;margin:0 0 26px;}
+.toc .t{font-size:13px;color:var(--text-dim);letter-spacing:1px;margin-bottom:8px;}
+.toc ol{margin:0;padding-left:20px;columns:2;column-gap:28px;font-size:14px;}
+@media(max-width:700px){.toc ol{columns:1;}}
+.toc a{color:var(--accent);}
+
+.key{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent);
+border-radius:0 10px 10px 0;padding:14px 18px;margin:14px 0;}
+.key .k{font-size:12px;color:var(--text-dim);letter-spacing:1.5px;margin-bottom:6px;}
+.key p{font-size:16px;font-weight:500;margin:0 0 6px;}
+.key p:last-child{margin-bottom:0;}
+
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:12px;
+padding:18px 20px;margin:16px 0;}
+.card.break{page-break-inside:avoid;}
+.chip{display:inline-block;padding:2px 10px;border-radius:20px;font-size:12.5px;
+font-weight:600;background:var(--accent);color:#fff;margin-right:8px;}
+.chip.g{background:var(--accent-3);}
+.chip.y{background:var(--accent-2);}
+.chip.r{background:var(--accent-4);}
+.row{display:flex;gap:12px;margin:0 0 12px;}
+.row .n{flex:0 0 26px;height:26px;border-radius:50%;background:var(--accent);color:#fff;
+font-weight:600;font-size:13px;display:flex;align-items:center;justify-content:center;margin-top:2px;}
+.row .b{flex:1;}
+.row .b .t{font-weight:600;margin-bottom:2px;}
+
+.say{background:var(--quote-bg);border-left:3px solid var(--quote-line);
+border-radius:0 8px 8px 0;padding:12px 16px;margin:8px 0 12px;font-size:15px;}
+.say .lb{font-size:11.5px;color:var(--text-dim);letter-spacing:1.5px;margin-bottom:5px;font-weight:600;}
+.say p{margin:0 0 8px;}
+.say p:last-child{margin-bottom:0;}
+.say em{font-style:normal;color:var(--accent);font-weight:600;}
+
+.do{font-size:14px;color:var(--text-dim);}
+.do b{color:var(--text);}
+
+table{width:100%;border-collapse:collapse;margin:12px 0;font-size:14px;}
+th{text-align:left;padding:9px 11px;background:var(--bg-card);border:1px solid var(--border);
+font-weight:600;}
+td{padding:9px 11px;border:1px solid var(--border);vertical-align:top;}
+tbody tr:nth-child(even) td{background:rgba(128,128,128,.045);}
+code{background:rgba(128,128,128,.15);padding:1px 6px;border-radius:4px;font-size:13.5px;
+font-family:ui-monospace,SFMono-Regular,Menlo,monospace;}
+
+.note{background:var(--bg-card);border:1px solid var(--border);border-left:3px solid var(--accent-2);
+border-radius:0 10px 10px 0;padding:12px 16px;margin:12px 0;font-size:14px;}
+.note .lb{font-weight:600;color:var(--accent-2);margin-bottom:4px;}
+
+.prompt{background:var(--bg);border:1px dashed var(--border);border-radius:8px;
+padding:12px 14px;margin:8px 0;font-size:13.5px;white-space:pre-wrap;
+font-family:ui-monospace,SFMono-Regular,Menlo,monospace;line-height:1.7;}
+
+@media print{
+body{padding:0;font-size:12px;}
+.theme-toggle{display:none;}
+.card,.key,.say,.note{page-break-inside:avoid;}
+h2{page-break-after:avoid;}
+}
+@media(max-width:640px){
+.theme-toggle{position:static;margin:0 auto 16px;transform:none;}
+.header{padding-right:0;}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<div class="header">
+<h1>WorkBuddy 实操分享 · 讲师执行手册</h1>
+<p class="sub">主题：把你的工作变成 Agent ｜ 90 分钟 ｜ 目标：每人下课前带走一个自己做的 Agent</p>
+<div class="theme-toggle">
+<button id="bL">日间</button>
+<button id="bD">夜间</button>
+</div>
+</div>
+
+<div class="key">
+<div class="k">三句灵魂句 · 开场抛、中间重复、结尾再收</div>
+<p>① 它不是问答机器，<em>是实习生</em>——你说得越清楚，它干得越好</p>
+<p>② 大任务一次甩给它，<em>等于让它闭眼跑马拉松</em></p>
+<p>③ 它说「已完成」不算数，<em>你自己验过才算数</em></p>
+</div>
+
+<div class="toc">
+<div class="t">快速跳转</div>
+<ol>
+<li><a href="#prep">课前准备（时间倒推）</a></li>
+<li><a href="#material">当天带的物料</a></li>
+<li><a href="#flow">90 分钟流程总览</a></li>
+<li><a href="#s1">① 开场冲击（00–06）</a></li>
+<li><a href="#s2">② 五问模板（06–15）</a></li>
+<li><a href="#s3">③ 动手做（15–40）</a></li>
+<li><a href="#s4">④ 展示点评（40–60）</a></li>
+<li><a href="#s5">⑤ 升级：敢用（60–75）</a></li>
+<li><a href="#s6">⑥ 自动化（75–84）</a></li>
+<li><a href="#s7">⑦ 收尾（84–90）</a></li>
+<li><a href="#qa">巡回答疑 10 问</a></li>
+<li><a href="#risk">风险预案</a></li>
+<li><a href="#demo">演示脚本与 Prompt</a></li>
+</ol>
+</div>
+
+<h2 id="prep">一、课前准备（按时间倒推）</h2>
+
+<table>
+<thead><tr><th style="width:16%">时间</th><th style="width:34%">做什么</th><th>要点</th></tr></thead>
+<tbody>
+<tr><td><strong>课前 5–7 天</strong></td><td>发《课前问卷》+ 安装指引</td><td>两个一起发，省一轮沟通。问卷用 Word 版发老师</td></tr>
+<tr><td><strong>课前 3 天</strong></td><td>回收截止，挑案例</td><td>按「频率 × 耗时」排，挑 3–5 个，标准见下方</td></tr>
+<tr><td><strong>课前 2 天</strong></td><td><strong>把挑中的案例自己先跑一遍</strong></td><td>这步别省——能提前发现哪些跑不通</td></tr>
+<tr><td><strong>课前 1 天</strong></td><td>群里预告 + 检查积分/设备</td><td>"课上会现场做这几个：XX 的客户台账、YY 的周报…"，制造期待</td></tr>
+<tr><td><strong>当天到场前</strong></td><td>把 3 个演示各跑通一遍</td><td>记下耗时，确认投屏/网络/电源</td></tr>
+</tbody>
+</table>
+
+<h4>挑案例的四条标准</h4>
+<ul>
+<li><strong>高频</strong>（每周/每月都做）→ 做完明天就能用</li>
+<li><strong>有明确输入输出</strong> → 容易跑通，不会现场卡死</li>
+<li><strong>通用性强</strong>（其他岗位也看得懂）→ 一人做、全场学到</li>
+<li><strong>5–10 分钟能跑完</strong> → 这条最硬，太复杂的只能讲不能做</li>
+</ul>
+
+<h2 id="material">二、当天带的物料</h2>
+
+<table>
+<thead><tr><th style="width:26%">物料</th><th style="width:34%">用途</th><th>备注</th></tr></thead>
+<tbody>
+<tr><td>演示文件夹（12 个混合文件）</td><td>开场冲击</td><td>docx/xlsx/pdf/图片混杂，<strong>提前备好别现场找</strong></td></tr>
+<tr><td>一张<strong>故意挖空一格</strong>的数据表</td><td>"它会骗你"演示</td><td>关键道具，全场最震撼的一环</td></tr>
+<tr><td>handout（正反面打印）</td><td>发给学员</td><td>正面：流程 + 五问模板；反面：案例 + 三验 + 三句话</td></tr>
+<tr><td>3 个预置案例</td><td>兜底</td><td>会议纪要结构化 / 乱表格清洗出图 / 定期信息追踪</td></tr>
+<tr><td>倒计时投屏</td><td>控时</td><td>动手环节<strong>必超时</strong></td></tr>
+</tbody>
+</table>
+
+<h2 id="flow">三、90 分钟流程总览</h2>
+
+<table>
+<thead><tr><th style="width:6%">#</th><th style="width:26%">环节</th><th style="width:56%">学员会做出什么</th><th style="width:12%">时长</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>开场 · 它不是聊天工具</td><td>看到它真的在动手干活，理解它和 ChatGPT 的区别</td><td>6 min</td></tr>
+<tr><td>2</td><td>五问模板 · 把你的活说清楚</td><td>填好五问表，得到一段能直接跑的需求</td><td>9 min</td></tr>
+<tr><td>3</td><td><strong>动手做 · 做出你的第一个 Agent</strong></td><td><strong>一个属于自己、真能跑的 Agent</strong></td><td>25 min</td></tr>
+<tr><td>4</td><td>展示点评 · 为什么有的成有的没成</td><td>从现场真实案例里听懂"说清楚"的关键</td><td>20 min</td></tr>
+<tr><td>5</td><td>升级 · 从"能用"到"敢用"</td><td>学会验收、防它骗你、把大任务拆小</td><td>15 min</td></tr>
+<tr><td>6</td><td>自动化 · 让它每周自己跑</td><td>把跑通的任务固化成定时任务</td><td>15 min</td></tr>
+<tr><td>7</td><td>收尾 · 三句话 + 作业</td><td>——</td><td>4 min</td></tr>
+</tbody>
+</table>
+
+<div class="note">
+<div class="lb">时间不够时</div>
+唯一不能砍的是<strong>动手 + 展示点评</strong>（第 3、4 段）。理论可以少讲，但他们必须亲手跑一次。
+</div>
+
+<h2 id="s1">四、① 开场冲击（00–06）</h2>
+
+<div class="card break">
+<h3><span class="chip">00–06</span>不解释，直接做</h3>
+
+<h4>动作</h4>
+<p class="do">打开 WorkBuddy，现场丢这个任务（用你提前准备好的 12 个文件的文件夹）：</p>
+<div class="prompt">读取这个文件夹里的 12 个文件，按类型分组整理到不同子文件夹，最后告诉我每类有几个、总共多大。</div>
+
+<h4>话术（可直接念）</h4>
+<div class="say">
+<div class="lb">看到它跑完后</div>
+<p>"刚才这不到两分钟的事，如果你们自己做，要多久？——大概五到十分钟。</p>
+<p>但我想让你们注意的不是省了几分钟，而是<em>它刚才干了什么</em>：它读了文件、做了判断、动了文件夹。<em>它不是在跟你聊天，它在干活。</em>"</p>
+</div>
+
+<div class="say">
+<div class="lb">抛灵魂句</div>
+<p>"我刚开始用的时候也踩过坑——我把它当 ChatGPT 用，问一句它答一句，来回七八次，还不如我自己写。后来才发现用法错了。<em>它是实习生，不是问答机器。</em>"</p>
+</div>
+
+<h4>破冰互动（30 秒）</h4>
+<div class="say">
+<p>"在座用过 AI 的举手？……觉得'也就那样'的举手？"（大概率一半人举手）</p>
+<p>"今天结束的时候，我希望后面那只手少一半。"</p>
+</div>
+
+<div class="note"><div class="lb">注意</div>这一段<strong>不要解释什么是 Agent、什么是大模型</strong>——讲了他们也没感觉。让他们先看见，再讲。</div>
+</div>
+
+<h2 id="s2">五、② 五问模板（06–15）</h2>
+
+<div class="card break">
+<h3><span class="chip">06–15</span>先展示你的案例，再让他们填</h3>
+
+<h4>动作</h4>
+<p class="do">投屏五问模板 → <strong>先用你的竞品监控案例演示一遍怎么填</strong> → 再让学员填自己的（8 分钟）</p>
+
+<h4>话术（可直接念）</h4>
+<div class="say">
+<div class="lb">介绍模板</div>
+<p>"这五问，前三问是'让它知道干什么'，后两问是'让它知道干到什么程度算完、什么情况别自作主张'。</p>
+<p><em>90% 的人只想了前三问，然后抱怨 AI 不好用。</em>真正决定好不好用的是第 4 和第 5 问。"</p>
+</div>
+
+<div class="say">
+<div class="lb">逐问提醒（每问不超过 1 分钟）</div>
+<p><strong>第 2 问</strong>："路径要给具体——'桌面上那个表'它找不到，要给'桌面/报表/三季度.xlsx'"</p>
+<p><strong>第 3 问</strong>："格式要说死——'给我个表'和'给我一张按部门汇总、含环比、带柱状图的表'，是两个结果"</p>
+<p><strong>第 4 问</strong>："这是验收标准。你不写，它就按自己的审美交卷"</p>
+<p><strong>第 5 问</strong>："这是兜底。比如'数据缺失不要自己编，来问我'——<em>这一条能救你的命</em>"</p>
+</div>
+
+<div class="say">
+<div class="lb">填完后</div>
+<p>"把你填的五条连起来，就是你的第一个 Agent 需求。<em>现在直接丢给它跑。</em>"</p>
+</div>
+
+<h4>你的示范案例（投屏用）</h4>
+<table>
+<thead><tr><th style="width:14%">五问</th><th>你的答案</th></tr></thead>
+<tbody>
+<tr><td><strong>① 做什么</strong></td><td>每周一 9:00 自动监控夸克 / Chrome / 豆包 / Edge 的本周新变化，分析对 QQ 浏览器 PC 端的影响，生成周报推送给我</td></tr>
+<tr><td><strong>② 输入</strong></td><td>4 款竞品的官方发布页、版本日志、官方博客（主），可信科技媒体（辅）；<strong>只看过去 7 天</strong></td></tr>
+<tr><td><strong>③ 输出</strong></td><td>固定结构周报：①变化总览表（竞品｜变化｜类型｜来源链接｜日期）②逐条影响分析 + 建议动作 ③本周检查记录</td></tr>
+<tr><td><strong>④ 做得好</strong></td><td>1. 每条附来源链接，我抽查 2 条必须打得开且属实　2. 区分「本周新变化」与「旧消息再传播」　3. 无变化时如实说明，<strong>不编内容填满</strong></td></tr>
+<tr><td><strong>⑤ 停下发问</strong></td><td>1. 重大变化当天单独提醒，不等周报　2. 信息源矛盾时列出来问我　3. 源访问失败要明确说哪个没查到</td></tr>
+</tbody>
+</table>
+
+<div class="say">
+<div class="lb">讲第 4 问时特别强调（这段最反直觉）</div>
+<p>"第三条最反直觉：<em>没有变化也要交报告</em>。为什么？因为'没消息'本身是重要信息——说明这周竞品没动作。如果它编内容把周报填满，我就被误导了。</p>
+<p>AI 有个毛病：<em>它不愿意交白卷。</em>"</p>
+</div>
+</div>
+
+<h2 id="s3">六、③ 动手做（15–40）+ 巡回</h2>
+
+<div class="card break">
+<h3><span class="chip">15–40</span>全场最重要的一段</h3>
+
+<div class="say">
+<div class="lb">开场指令</div>
+<p>"现在 25 分钟，你自己跑。跑通了别急着玩，试着改一版让它更好；跑不通也别急——<em>跑不通的同学，你等会儿的价值比跑通的大</em>，因为我们正好要讲为什么跑不通。"</p>
+</div>
+
+<h4>巡回时三种情况三种说法</h4>
+<table>
+<thead><tr><th style="width:22%">学员状态</th><th>你说什么</th></tr></thead>
+<tbody>
+<tr><td><strong>跑通了，很兴奋</strong></td><td>"好。现在问你：<em>它给你的东西，你敢直接发给你老板吗？</em>"（引出验收）</td></tr>
+<tr><td><strong>结果不对</strong></td><td><strong>别帮他改 prompt</strong>。问："是你没说清，还是它没听懂？"——90% 是没说清，让他自己改第 2、3 问</td></tr>
+<tr><td><strong>不知道做什么</strong></td><td>给三个 starter："你这周最烦的一件重复的事？""你每周要交的固定格式的东西？""你有没有定期要盯的信息？"</td></tr>
+</tbody>
+</table>
+
+<div class="note"><div class="lb">控时</div>剩 10 分钟、剩 5 分钟各提醒一次（投屏倒计时）。这一段<strong>必超时</strong>，别心软。</div>
+</div>
+
+<h2 id="s4">七、④ 展示点评（40–60）</h2>
+
+<div class="card break">
+<h3><span class="chip">40–60</span>让理论从现场长出来</h3>
+
+<p class="do">挑 3–4 个人展示：<strong>一个跑得顺的、一个翻车的、一个任务选得巧的</strong>。每个展示完用"追问"带出道理，<strong>不要你直接讲道理</strong>。</p>
+
+<h4>三种展示的话术</h4>
+
+<div class="say">
+<div class="lb">① 跑得顺的 → 引出"说清楚"</div>
+<p>"大家看他这份，一次就成。你们猜为什么？——<em>他把输入和输出说死了。</em></p>
+<p>金句：<em>你给的信息越少，它越靠猜。</em>"</p>
+</div>
+
+<div class="say">
+<div class="lb">② 翻车的 → 引出"边界要说死"</div>
+<p>"他这个跑出来的结果不对。我们一起看看他的第 2 问——'那个表'。它不知道是哪个表，所以自己找了一个。</p>
+<p>所以边界要说死：'排除鸿蒙'到底是字段含这两个字，还是平台等于鸿蒙？<em>你不说，它猜。</em>"</p>
+</div>
+
+<div class="say">
+<div class="lb">③ 任务选得巧的 → 引出"什么活值得做"</div>
+<p>"大家看她这个任务——她做的是每周都要重复做的。<em>重复、规则明确、不用实时判断的事，最适合交给 Agent。</em></p>
+<p>反过来，需要临场判断、需要担责的事，别交。"</p>
+</div>
+
+<div class="say">
+<div class="lb">本段收尾</div>
+<p>"你们注意到了吗？刚才这些道理，全是<em>你们自己跑出来的</em>，不是我讲的。这就是今天最好的学习方式——<em>做了再懂。</em>"</p>
+</div>
+
+<div class="say">
+<div class="lb">可以回收你自己的经历（加分）</div>
+<p>"我做的那个竞品监控 Agent，最开始的需求就一句话：'每周让我知道竞品做了什么'。<em>这句话跑出来的东西完全不可用</em>——它不知道看哪几个竞品、不知道什么算'新'、没有来源链接我根本没法核对。后来变成五问，才变成刚才那个。</p>
+<p><em>从一句话到五问，就是从'想用 AI'到'会用 AI'的距离。</em>"</p>
+</div>
+</div>
+
+<h2 id="s5">八、⑤ 升级：从"能用"到"敢用"（60–75）</h2>
+
+<div class="card break">
+<h3><span class="chip g">60–75</span>两个现场演示</h3>
+
+<h4>演示 A：它会骗你（3 分钟，全场最震撼）</h4>
+<p class="do">拿出那张<strong>故意挖空一格</strong>的数据表，现场让它算均值。</p>
+<p class="do">大概率结果：它自己补一个看起来合理的数，<strong>而且不告诉你"这里缺数据"</strong>。</p>
+
+<div class="say">
+<p>"看到了吗？<em>它不会说'我不知道'，它会给你一个看起来合理的答案。</em></p>
+<p>有个真实案例：有人让 AI 按既有表格做月报，它回复'全部修好了，数据均真实'——实际核对全是错的。还有人让它分析银行流水，它把借方贷方搞反了，指出来重做还是错。</p>
+<p><em>所以：它说'已完成'不算数，你自己验过才算数。</em>"</p>
+</div>
+
+<div class="say">
+<div class="lb">给出三验清单</div>
+<p>"以后它交给你任何东西，<em>至少验三样</em>：文件能不能打开、数据对不对得上、结论有没有来源。"</p>
+</div>
+
+<h4>演示 B：大任务拆小步（4 分钟）</h4>
+<p class="do">现场甩一个大需求——"把这 20 份资料做成汇报 PPT"。<strong>看它要么慢、要么结果差</strong>。然后拆成三轮：① 先列框架让我确认 → ② 展开某一部分 → ③ 生成。</p>
+
+<div class="say">
+<p>"<em>大任务一次甩给它，等于让它闭眼跑马拉松。</em>它跑完了，但每一段都可能偏。拆开的好处是：<em>每一步你都能拉回来，而不是最后整份推翻。</em>"</p>
+</div>
+
+<div class="say">
+<div class="lb">补一句反常识的（这段很加分）</div>
+<p>"但也<em>别为了炫技把所有步骤都做成复杂流程</em>——简单、重复、确定的活（批量改名、格式转换）交给程序就行，<em>需要理解和判断的才交给它</em>。用错地方，成本反而更高。"</p>
+</div>
+</div>
+
+<h2 id="s6">九、⑥ 自动化（75–84）</h2>
+
+<div class="card break">
+<h3><span class="chip y">75–84</span>把跑通的固化下来</h3>
+
+<p class="do">用你的竞品监控案例演示：<strong>先手动跑通 → 再加一句变成定时任务</strong>。</p>
+
+<div class="prompt">把上面的任务设为定时任务：每周一上午 9:00 自动执行，
+生成的周报发送到我的邮箱，并在周报开头标注本次执行时间和数据覆盖范围。</div>
+
+<div class="say">
+<div class="lb">教学点</div>
+<p>"先跑通、再固化。很多人一上来就想'每周自动跑'，结果第一次跑的逻辑就是错的，<em>每周自动地错一遍</em>。</p>
+<p>顺序永远是：<em>先手动跑对，再交给定时器。</em>"</p>
+</div>
+
+<div class="note"><div class="lb">演示提醒</div>推送环节演示到<strong>邮箱即可</strong>（小程序链路演示复杂，口播一句"还能推到小程序"带过）。</div>
+</div>
+
+<h2 id="s7">十、⑦ 收尾（84–90）</h2>
+
+<div class="card break">
+<h3><span class="chip">84–90</span>三句话 + 一个作业</h3>
+
+<div class="say">
+<div class="lb">带着全场念一遍三句话</div>
+<p>① 它不是问答机器，是实习生——你说得越清楚，它干得越好</p>
+<p>② 大任务一次甩给它，等于让它闭眼跑马拉松</p>
+<p>③ 它说"已完成"不算数，你自己验过才算数</p>
+</div>
+
+<div class="say">
+<div class="lb">作业（一定要留回执动作）</div>
+<p>"用今天这套五问，把你业务里的<em>一件真实的事</em>做成 Agent。做完发我，我帮你看哪里能更好。</p>
+<p>别拿我今天的例子练——<em>别人的例子你听完就忘，自己的活你明天就能用。</em>"</p>
+</div>
+</div>
+
+<h2 id="qa">十一、巡回答疑 10 问</h2>
+
+<table>
+<thead><tr><th style="width:24%">学员问</th><th>你怎么答</th></tr></thead>
+<tbody>
+<tr><td>我电脑没装 / 没账号</td><td>"先跟旁边同学结对看他的，课后我发你指引——<strong>别让设备问题占用你的 25 分钟</strong>"</td></tr>
+<tr><td>我不知道做什么</td><td>三个 starter：最烦的重复事 / 每周要交的固定格式 / 定期要盯的信息</td></tr>
+<tr><td>它跑出来不对</td><td>"是你没说清还是它没听懂？回去改第 2、3 问"</td></tr>
+<tr><td>它一直转，要多久</td><td>"正常 1–3 分钟。超过 5 分钟就是任务太大——<strong>拆小</strong>"</td></tr>
+<tr><td>积分用完了怎么办</td><td>"所以要拆小任务、少走弯路——这也是为什么第 4、5 问重要"</td></tr>
+<tr><td>我的数据会不会泄露</td><td>"只授权你信任的文件夹；敏感数据先脱敏再给它"</td></tr>
+<tr><td>它会不会取代我</td><td>"替代的是<strong>任务</strong>，不是人。前提是<strong>你愿意重新定义自己的任务</strong>——最危险的不是被替代，是继续用旧方式工作"</td></tr>
+<tr><td>跟 ChatGPT 有什么区别</td><td>"ChatGPT 给你答案，它给你<strong>做完的东西</strong>——刚才它动了你的文件夹，这是本质差别"</td></tr>
+<tr><td>能保存复用吗</td><td>"能，做成 Skill 或定时任务，下次一句话就跑"</td></tr>
+<tr><td>免费吗</td><td>按当时实际政策答；不确定就说"我课后确认了回你"</td></tr>
+</tbody>
+</table>
+
+<h2 id="risk">十二、风险预案</h2>
+
+<table>
+<thead><tr><th style="width:24%">风险</th><th>预案</th></tr></thead>
+<tbody>
+<tr><td><strong>大面积跑不起来</strong>（网络/权限）</td><td>立刻切"结对模式"：两人一组用一台；同时你投屏演示 3 个预置案例，保证每人<strong>至少看到过它跑通</strong></td></tr>
+<tr><td><strong>你自己现场翻车</strong></td><td>别慌，一句话转成教学点："正好——<em>它会失败，而且不告诉你</em>。所以我们才要写第 5 问：什么情况必须停下来问我。"</td></tr>
+<tr><td><strong>时间超了</strong></td><td>动手环节必超时。<strong>优先保"展示点评"</strong>（那是理论长出来的地方）</td></tr>
+<tr><td><strong>有人质疑 AI 价值</strong></td><td>不要辩论，用事实回应："你现在最烦的那件重复的事是什么？我们现场试一次，跑不通我请你喝咖啡。"</td></tr>
+<tr><td><strong>敏感数据 / 内部信息</strong></td><td><strong>只讲已公开口径</strong>（3.45 亿、2097 万、留存 60%/80% 都是可查的）。内部规划、未发布路线图一律不讲</td></tr>
+<tr><td><strong>你的案例遇到反爬</strong></td><td>信息源选官方博客、版本日志页（结构稳定好抓）；现场只跑一次，兜底用提前跑好的周报</td></tr>
+</tbody>
+</table>
+
+<h2 id="demo">十三、演示脚本与 Prompt</h2>
+
+<h4>① 开场演示（12 个文件）</h4>
+<div class="prompt">读取这个文件夹里的 12 个文件，按类型分组整理到不同子文件夹，最后告诉我每类有几个、总共多大。</div>
+
+<h4>② 竞品监控 · 第一次跑（投屏粘贴用）</h4>
+<div class="prompt">你是我（QQ 浏览器 PC 端产品经理）的竞品监控助手。
+
+【任务】
+监控 4 款竞品浏览器：夸克、Chrome、豆包、Edge。
+跟踪内容：版本更新、功能发布、官方公告。
+信息源：官方发布页 / 版本日志 / 官方博客为主，可信科技媒体为辅。
+
+【时间范围】
+只报告本周（过去 7 天）新发生的变化。
+旧消息被再次传播的，归入"旧消息"并注明，不要当新闻。
+
+【输出：竞品对比周报】
+① 本周变化总览表：竞品 | 变化内容 | 类型(版本/功能/公告) | 来源链接 | 日期
+② 影响分析：逐条分析对 QQ 浏览器 PC 端产品规划的影响，
+   给出建议动作（跟进 / 观察 / 忽略）
+③ 本周检查记录：列出检查了哪些渠道。
+   某竞品本周没有重要变化，就如实写"未发现重要变化"，
+   不要编造内容填满周报。
+
+【质量要求】
+- 每条信息必须附来源链接，我至少会抽查 2 条
+- 信息源之间有矛盾时，列出矛盾点，不要擅自选一个
+
+【停止规则】
+- 出现可能直接冲击 QQ 浏览器核心场景的重大变化
+  （如内置 AI 助手大版本更新、默认搜索引擎变更），单独标注【重要】置顶
+- 某个信息源访问失败，明确告诉我"哪个源没查到"，不要静默跳过
+
+【执行】
+现在跑第一次，生成本周的竞品对比周报。</div>
+
+<h4>③ 设置自动化</h4>
+<div class="prompt">把上面的任务设为定时任务：每周一上午 9:00 自动执行，
+生成的周报发送到我的邮箱，并在周报开头标注本次执行时间和数据覆盖范围。</div>
+
+<h4>④ "它会骗你"演示道具</h4>
+<p class="do">准备一张数据表，<strong>故意挖空其中一格</strong>（比如某天的 DAU），现场让它算周均值。看它是"按规则标注缺失"还是"自己补一个数"。</p>
+
+<h2>十四、一句话提醒</h2>
+
+<div class="key">
+<div class="k">这堂课成功的标准</div>
+<p><em>不是你讲得多精彩，是他们下课前有没有真的跑通一个自己的东西。</em></p>
+<p>所以动手的 25 分钟，任何理由都不要压缩。</p>
+</div>
+
+<p class="sub" style="margin-top:30px;text-align:center;">手册版本：2026-10-11 ｜ 配套文件：handout（正反面）、课前问卷（Word）</p>
+
+</div>
+<script>
+(function(){
+var bl=document.getElementById('bL'),bd=document.getElementById('bD');
+function apply(t){
+document.documentElement.setAttribute('data-theme',t);
+localStorage.setItem('wb_theme',t);
+bl.classList.toggle('on',t==='light');
+bd.classList.toggle('on',t==='dark');
+}
+bl.addEventListener('click',function(){apply('light');});
+bd.addEventListener('click',function(){apply('dark');});
+apply(document.documentElement.getAttribute('data-theme')||'light');
+})();
+</script>
+</body>
+</html>
